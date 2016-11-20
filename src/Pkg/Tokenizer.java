@@ -16,25 +16,25 @@ public class Tokenizer
     private class TokenInfo
     {
         public final Pattern regex;
-        public final int token;
+        public final int tokenCode;
 
-        public TokenInfo(Pattern regex, int token)
+        public TokenInfo(Pattern regex, int tokenCode)
         {
             super();
             this.regex = regex;
-            this.token = token;
+            this.tokenCode = tokenCode;
         }
     }
 
     public class Token
     {
-        public final int token;
+        public final int tokenCode;
         public final String sequence;
 
-        public Token(int token, String sequence)
+        public Token(int tokenCode, String sequence)
         {
             super();
-            this.token = token;
+            this.tokenCode = tokenCode;
             this.sequence = sequence;
         }
 
@@ -49,9 +49,9 @@ public class Tokenizer
         tokens = new LinkedList<Token>();
     }
 
-    public void add(String regex, int token)
+    public void add(String regex, int tokenCode)
     {
-        tokenInfos.add(new TokenInfo(Pattern.compile("^("+regex+")"), token));
+        tokenInfos.add(new TokenInfo(Pattern.compile("^("+regex+")"), tokenCode));
     }
 
     public void tokenize(String str)
@@ -67,9 +67,9 @@ public class Tokenizer
                 if (matcher.find())
                 {
                     match = true;
-                    String tok = matcher.group().trim();
+                    String sequence = matcher.group().trim();
                     input = matcher.replaceFirst("").trim();
-                    tokens.add(new Token(info.token, tok));
+                    tokens.add(new Token(info.tokenCode, sequence));
                     break;
                 }
             }

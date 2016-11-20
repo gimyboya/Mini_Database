@@ -22,7 +22,7 @@ public class Main {
 
             for (Tokenizer.Token tok : tokenizer.getTokens())
             {
-                System.out.println("" + tok.token + " " + tok.sequence);
+                System.out.println("" + tok.tokenCode + " " + tok.sequence);
             }
         }
         catch (ParserException e)
