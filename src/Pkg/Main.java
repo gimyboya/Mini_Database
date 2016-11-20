@@ -18,7 +18,7 @@ public class Main {
 
         try
         {
-            tokenizer.tokenize(" sin(x) * (1 - var_12) ");
+            tokenizer.tokenize("sin(x)*(1-var_12)");
 
             for (Tokenizer.Token tok : tokenizer.getTokens())
             {
