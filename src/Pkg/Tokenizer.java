@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class Tokenizer
 {
-    private class TokenInfo
+    public class TokenInfo
     {
         public final Pattern regex;
         public final int tokenCode;
@@ -40,6 +40,8 @@ public class Tokenizer
 
     }
 
+
+
     private LinkedList<TokenInfo> tokenInfos;
     private LinkedList<Token> tokens;
 
@@ -51,7 +53,7 @@ public class Tokenizer
 
     public void add(String regex, int tokenCode)
     {
-        tokenInfos.add(new TokenInfo(Pattern.compile("^("+regex+")"), tokenCode));
+        tokenInfos.add(new TokenInfo(Pattern.compile("/^("+regex+")/i"), tokenCode));
     }
 
     public void tokenize(String str)
@@ -80,6 +82,10 @@ public class Tokenizer
     public LinkedList<Token> getTokens()
     {
         return tokens;
+    }
+
+    public LinkedList<TokenInfo> getTokenInfos() {
+        return tokenInfos;
     }
 
 }

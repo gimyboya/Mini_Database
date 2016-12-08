@@ -1,34 +1,27 @@
 package Pkg;
 
 import jdk.nashorn.internal.runtime.ParserException;
+import java.util.LinkedList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
 
     public static void main(String[] args) {
 
+        FileHandler fileHandler = new FileHandler();
+
         Tokenizer tokenizer = new Tokenizer();
 
-        tokenizer.add("sin|cos|exp|ln|sqrt", 1);
-        tokenizer.add("\\(", 2);
-        tokenizer.add("\\)", 3);
-        tokenizer.add("\\+|-", 4);
-        tokenizer.add("\\*|/", 5);
-        tokenizer.add("[0-9]+",6);
-        tokenizer.add("[a-zA-Z][a-zA-Z0-9_]*", 7);
+        fileHandler.openFile("TokensInfos.txt");// open the file
+        fileHandler.readFromFile(tokenizer);// add the information to the linked list
+        fileHandler.closeFile();//close the file
+        
 
-        try
-        {
-            tokenizer.tokenize("sin(x)*(1-var_12)");
 
-            for (Tokenizer.Token tok : tokenizer.getTokens())
-            {
-                System.out.println("" + tok.tokenCode + " " + tok.sequence);
-            }
-        }
-        catch (ParserException e)
-        {
-            System.out.println(e.getMessage());
-        }
+
+
+
 
     }
 }
