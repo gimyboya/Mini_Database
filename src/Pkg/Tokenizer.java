@@ -15,14 +15,24 @@ public class Tokenizer
 {
     public class TokenInfo
     {
-        public final Pattern regex;
-        public final int tokenCode;
+
+
+        private final Pattern regex;
+        private final int tokenCode;
 
         public TokenInfo(Pattern regex, int tokenCode)
         {
             super();
             this.regex = regex;
             this.tokenCode = tokenCode;
+        }
+
+        public Pattern getRegex() {
+            return regex;
+        }
+
+        public int getTokenCode() {
+            return tokenCode;
         }
     }
 

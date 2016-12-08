@@ -1,0 +1,45 @@
+tokenizer.add("SELECT", 1);
+        tokenizer.add("\\*", 1);
+
+
+
+        tokenizer.add("UPDATE", 1);
+        tokenizer.add("SET", 1);
+
+        tokenizer.add("INSERT", 1);
+        tokenizer.add("INTO", 1);
+        tokenizer.add("VALUES", 1);
+
+        tokenizer.add("CREATE", 1);
+        tokenizer.add("TABLE", 1);
+
+        tokenizer.add("FROM", 1); //select, delete
+        tokenizer.add("WHERE", 1);
+        tokenizer.add("DISTINCT", 1);
+        tokenizer.add("ORDER BY", 1);
+        tokenizer.add("AND", 1);
+        tokenizer.add("OR", 1);
+
+        tokenizer.add("\\(", 2);
+        tokenizer.add("\\)", 3);
+
+        tokenizer.add("\\+|-", 4);
+        tokenizer.add("\\*|/", 5);
+
+        tokenizer.add("[0-9]+",6);//digits
+
+        tokenizer.add("[a-zA-Z][a-zA-Z0-9_]*", 7);//variables
+		
+		try
+        {
+            tokenizer.tokenize("sin(x)*(1-var_12)");
+
+            for (Tokenizer.Token tok : tokenizer.getTokens())
+            {
+                System.out.println("" + tok.tokenCode + " " + tok.sequence);
+            }
+        }
+        catch (ParserException e)
+        {
+            System.out.println(e.getMessage());
+        }
