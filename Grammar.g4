@@ -25,33 +25,24 @@ statement
   ;
 
 
-data_change_statement //# TODO
+data_change_statement
   : insert_statement
   | delete_statement
   | update_statement
   ;
 
-schema_statement //# TODO
+schema_statement
   : create_table_statement
   | drop_table_statement
   ;
 
-create_table_statement //# TODO
-  : CREATE TABLE identifier (table_elements)?
+create_table_statement
+  : CREATE TABLE identifier (LEFT_PAREN field_element (COMMA field_element)* RIGHT_PAREN)?
   ;
 
-table_elements //# TODO
-  : LEFT_PAREN field_element (COMMA field_element)* RIGHT_PAREN
+field_element
+  : name=identifier data_type
   ;
-
-field_element //# TODO
-  : name=identifier field_type
-  ;
-
-field_type //# TODO
-  : data_type
-  ;
-
 
 /*
 ===============================================================================
@@ -59,7 +50,7 @@ field_type //# TODO
 ===============================================================================
 */
 
-drop_table_statement //# TODO
+drop_table_statement
   : DROP TABLE identifier
   ;
 
@@ -71,12 +62,12 @@ drop_table_statement //# TODO
 ===============================================================================
 */
 
-identifier //# TODO
+identifier
   : Identifier
   | nonreserved_keywords
   ;
 
-nonreserved_keywords //# TODO
+nonreserved_keywords
   : INSERT
   | BY
   ;
@@ -87,36 +78,36 @@ nonreserved_keywords //# TODO
 ===============================================================================
 */
 
-unsigned_literal //# TODO
+unsigned_literal
   : unsigned_numeric_literal
   | general_literal
   ;
 
-general_literal //# TODO
+general_literal
   : Character_String_Literal
   | datetime_literal
   | boolean_literal
   ;
 
-datetime_literal //# TODO
+datetime_literal
   : timestamp_literal
   | time_literal
   | date_literal
   ;
 
-time_literal //# TODO
+time_literal
   : TIME time_string=Character_String_Literal
   ;
 
-timestamp_literal //# TODO
+timestamp_literal
   : TIMESTAMP timestamp_string=Character_String_Literal
   ;
 
-date_literal //# TODO
+date_literal
   : DATE date_string=Character_String_Literal
   ;
 
-boolean_literal //# TODO
+boolean_literal
   : TRUE | FALSE | UNKNOWN
   ;
 
@@ -181,20 +172,16 @@ datetime_type //# TODO
   6.3 <value_expression_primary>
 ===============================================================================
 */
-value_expression_primary //# TODO
-  : parenthesized_value_expression
+value_expression_primary
+  : LEFT_PAREN value_expression RIGHT_PAREN
   | nonparenthesized_value_expression_primary
   ;
 
-parenthesized_value_expression //# TODO
-  : LEFT_PAREN value_expression RIGHT_PAREN
-  ;
-
-nonparenthesized_value_expression_primary //# TODO
-  : unsigned_value_specification //numbers
-  | signed_numerical_literal // added signed numbers
+nonparenthesized_value_expression_primary
+  : unsigned_value_specification //strings
+  | signed_numerical_literal // numbers
   | identifier //column_reference
-  | set_function_specification //aggregate functions
+  | aggregate_function //aggregate functions
   ;
 
 /*
@@ -203,17 +190,17 @@ nonparenthesized_value_expression_primary //# TODO
 ===============================================================================
 */
 
-unsigned_value_specification //# TODO
+unsigned_value_specification
   : unsigned_literal
   ;
 
-unsigned_numeric_literal //# TODO
+unsigned_numeric_literal
   : NUMBER
   | REAL_NUMBER
   ;
 
-signed_numerical_literal //# TODO
-  : sign? unsigned_numeric_literal
+signed_numerical_literal
+  : (PLUS | MINUS) unsigned_numeric_literal
   ;
 
 /*
@@ -223,20 +210,17 @@ signed_numerical_literal //# TODO
   Invoke an SQL-invoked routine.
 ===============================================================================
 */
-set_function_specification //# TODO
-  : aggregate_function
-  ;
 
-aggregate_function //# TODO
+aggregate_function
   : COUNT LEFT_PAREN MULTIPLY RIGHT_PAREN
   | general_set_function
   ;
 
-general_set_function //# TODO
+general_set_function
   : set_function_type LEFT_PAREN DISTINCT? value_expression RIGHT_PAREN
   ;
 
-set_function_type //# TODO
+set_function_type
   : AVG
   | MAX
   | MIN
@@ -249,13 +233,13 @@ set_function_type //# TODO
   6.25 <value expression>
 ===============================================================================
 */
-value_expression //# TODO
+value_expression
   : common_value_expression
   | row_value_expression
   | boolean_value_expression
   ;
 
-common_value_expression //# TODO
+common_value_expression
   : numeric_value_expression
   | string_value_expression
   | NULL
@@ -269,24 +253,20 @@ common_value_expression //# TODO
 ===============================================================================
 */
 
-numeric_value_expression //# TODO
+numeric_value_expression
   : left=term ((PLUS|MINUS) right=term)*
   ;
 
-term //# TODO
+term
   : left=factor ((MULTIPLY|DIVIDE|MODULAR) right=factor)*
   ;
 
-factor //# TODO
-  : (sign)? numeric_primary
+factor
+  : (PLUS | MINUS)? numeric_primary
   ;
 
-numeric_primary //# TODO
+numeric_primary
   : value_expression_primary // deleted the casting
-  ;
-
-sign //# TODO
-  : PLUS | MINUS
   ;
 
 /*
@@ -295,7 +275,7 @@ sign //# TODO
 ===============================================================================
 */
 
-string_value_expression //# TODO
+string_value_expression
   : value_expression_primary
   ;
 
@@ -305,46 +285,46 @@ string_value_expression //# TODO
 ===============================================================================
 */
 
-boolean_value_expression //# TODO
+boolean_value_expression
   : or_predicate
   ;
 
-or_predicate //# TODO
+or_predicate
   : and_predicate (OR or_predicate)*
   ;
 
-and_predicate //# TODO
+and_predicate
   : boolean_factor (AND and_predicate)*
   ;
 
-boolean_factor //# TODO
+boolean_factor
   : boolean_test
   | NOT boolean_test
   ;
 
-boolean_test //# TODO
+boolean_test
   : boolean_primary is_clause?
   ;
 
-is_clause //# TODO
+is_clause
   : IS NOT? t=truth_value //is not = ! | <>
   ;
 
-truth_value //# TODO
+truth_value
   : TRUE | FALSE | UNKNOWN
   ;
 
-boolean_primary //# TODO
+boolean_primary
   : predicate
   | boolean_predicand
   ;
 
-boolean_predicand //# TODO
+boolean_predicand
   : parenthesized_boolean_value_expression 
   | nonparenthesized_value_expression_primary
   ;
 
-parenthesized_boolean_value_expression //# TODO
+parenthesized_boolean_value_expression
   : LEFT_PAREN boolean_value_expression RIGHT_PAREN
   ;
 
@@ -353,25 +333,17 @@ parenthesized_boolean_value_expression //# TODO
   7.2 <row value expression>
 ===============================================================================
 */
-row_value_expression //# TODO
-  : row_value_special_case
-  | explicit_row_value_constructor
-  ;
-
-row_value_special_case //# TODO
+row_value_expression
   : nonparenthesized_value_expression_primary
+  | NULL
   ;
 
-explicit_row_value_constructor //# TODO
-  : NULL
-  ;
-
-row_value_predicand //# TODO
-  : row_value_special_case
+row_value_predicand
+  : nonparenthesized_value_expression_primary
   | row_value_constructor_predicand
   ;
 
-row_value_constructor_predicand //# TODO
+row_value_constructor_predicand
   : common_value_expression
   | boolean_predicand
   ;
@@ -463,7 +435,7 @@ qualified_asterisk
 ===============================================================================
 */
 
-predicate //# TODO
+predicate
   : comparison_predicate
   | null_predicate
   ;
@@ -475,7 +447,7 @@ predicate //# TODO
   Specify a comparison of two row values.
 ===============================================================================
 */
-comparison_predicate //# TODO
+comparison_predicate
   : left=row_value_predicand c=comp_op right=row_value_predicand
   ;
 
