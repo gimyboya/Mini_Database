@@ -20,11 +20,7 @@ public class Main {
 
         try
         {
-            tokenizer.tokenize("CREATE TABLE Persons ( PersonID int, tertour varchar(255),\n" +
-                    "tataaljiya varchar(255),\n" +
-                    "Address varchar(255),\n" +
-                    "City varchar(255)\n" +
-                    ");");
+            tokenizer.tokenize("UPDATE weather SET Column1 = 'Value1', Column2 = 'Value2';");
 
             Parser parser = new Parser();
             parser.parse(tokenizer.getTokens());
