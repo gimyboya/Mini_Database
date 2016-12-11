@@ -20,12 +20,18 @@ public class Main {
 
         try
         {
-            tokenizer.tokenize("DELETE FROM Customers\n" +
-                    "WHERE CustomerName='Alfreds Futterkiste' AND ContactName='\tMaria Anders';");
+            tokenizer.tokenize("CREATE TABLE Persons ( PersonID int, tertour varchar(255),\n" +
+                    "tataaljiya varchar(255),\n" +
+                    "Address varchar(255),\n" +
+                    "City varchar(255)\n" +
+                    ");");
+
+            Parser parser = new Parser();
+            parser.parse(tokenizer.getTokens());
 
             for (int i = 0; i < tokenizer.getTokens().size(); i++) {
 
-                System.out.println("" + tokenizer.getTokens().get(i).sequence + " " + tokenizer.getTokens().get(i).tokenCode);
+               // System.out.println("" + tokenizer.getTokens().get(i).sequence + " " + tokenizer.getTokens().get(i).tokenCode);
             }
 
         }

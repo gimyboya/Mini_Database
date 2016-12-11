@@ -19,9 +19,9 @@ sql
   ;
 
 statement
-  : data_statement
-  | data_change_statement
-  | schema_statement
+  : data_statement //select
+  | data_change_statement //insert delete update
+  | schema_statement //create drop
   ;
 
 
@@ -117,30 +117,30 @@ boolean_literal
 ===============================================================================
 */
 
-data_type //# TODO
+data_type
   : character_string_type
   | numeric_type
   | boolean_type
   | datetime_type
   ;
 
-character_string_type //# TODO
+character_string_type
   : CHARACTER type_length?
   | CHAR type_length?
   | VARCHAR type_length?
   | TEXT
   ;
 
-type_length //# TODO
+type_length
   : LEFT_PAREN NUMBER RIGHT_PAREN
   ;
 
 
-numeric_type //# TODO
+numeric_type
   : exact_numeric_type | approximate_numeric_type
   ;
 
-exact_numeric_type //# TODO
+exact_numeric_type
   : NUMERIC
   | DECIMAL
   | DEC
@@ -148,19 +148,19 @@ exact_numeric_type //# TODO
   | INTEGER
   ;
 
-approximate_numeric_type //# TODO
+approximate_numeric_type
   : FLOAT
   | REAL
   | DOUBLE
   ;
 
 
-boolean_type //# TODO
+boolean_type
   : BOOLEAN
   | BOOL
   ;
 
-datetime_type //# TODO
+datetime_type
   : DATE
   | TIME
   | TIMESTAMP
@@ -179,7 +179,6 @@ value_expression_primary
 
 nonparenthesized_value_expression_primary
   : unsigned_value_specification //strings
-  | signed_numerical_literal // numbers
   | identifier //column_reference
   | aggregate_function //aggregate functions
   ;
@@ -199,9 +198,6 @@ unsigned_numeric_literal
   | REAL_NUMBER
   ;
 
-signed_numerical_literal
-  : (PLUS | MINUS) unsigned_numeric_literal
-  ;
 
 /*
 ===============================================================================
@@ -354,7 +350,7 @@ row_value_constructor_predicand
 ===============================================================================
 */
 
-table_expression //# TODO
+table_expression
   : from_clause
     where_clause?
     orderby_clause?
@@ -366,11 +362,11 @@ table_expression //# TODO
 ===============================================================================
 */
 
-from_clause //# TODO
+from_clause
   : FROM table_reference_list
   ;
 
-table_reference_list //# TODO
+table_reference_list
   :table_reference (COMMA table_reference)*
   ;
 
@@ -380,11 +376,11 @@ table_reference_list //# TODO
 ===============================================================================
 */
 
-table_reference //# TODO
+table_reference
     : identifier
   ;
 
-column_name_list //# TODO
+column_name_list //#
   :  identifier  ( COMMA identifier  )*
   ;
 
@@ -394,11 +390,11 @@ column_name_list //# TODO
   7.8 <where clause>
 ===============================================================================
 */
-where_clause //# TODO
+where_clause
   : WHERE search_condition
   ;
 
-search_condition //# TODO
+search_condition
   : value_expression // instead of boolean_value_expression, we use value_expression for more flexibility.
   ;
 
@@ -451,7 +447,7 @@ comparison_predicate
   : left=row_value_predicand c=comp_op right=row_value_predicand
   ;
 
-comp_op //# TODO
+comp_op
   : EQUAL
   | NOT_EQUAL
   | LTH
@@ -468,7 +464,7 @@ comp_op //# TODO
 ===============================================================================
 */
 
-null_predicate //# TODO
+null_predicate
   : predicand=row_value_predicand IS (n=NOT)? NULL
   ;
 
@@ -480,25 +476,25 @@ null_predicate //# TODO
 ===============================================================================
 */
 
-orderby_clause //# TODO
+orderby_clause
   : ORDER BY sort_specifier_list
   ;
 
-sort_specifier_list //# TODO
+sort_specifier_list
   : sort_specifier (COMMA sort_specifier)*
   ;
 
-sort_specifier //# TODO
+sort_specifier
   : key=row_value_predicand order=order_specification? null_order=null_ordering?
   ;
 
-order_specification //# TODO
+order_specification
   : ASC
   | DESC
   ;
 
 
-null_ordering //# TODO
+null_ordering
   : NULL FIRST
   | NULL LAST
   ;
@@ -509,11 +505,11 @@ null_ordering //# TODO
 ===============================================================================
 */
 
-insert_statement //# TODO
-  : INSERT INTO tb_name=identifier (LEFT_PAREN column_name_list RIGHT_PAREN)? (VALUES LEFT_PAREN insert_value_list RIGHT_PAREN)?
+insert_statement
+  : INSERT INTO tb_name=identifier (LEFT_PAREN column_name_list RIGHT_PAREN)? (VALUES LEFT_PAREN insert_value_list RIGHT_PAREN)
   ;
 
-insert_value_list //# TODO
+insert_value_list
   : value_expression  ( COMMA value_expression )*
   ;
 /*
@@ -522,7 +518,7 @@ insert_value_list //# TODO
 ===============================================================================
 */
 
-delete_statement //# TODO
+delete_statement
   : DELETE table_expression
   | DELETE qualified_asterisk? from_clause
   ;
@@ -531,10 +527,10 @@ delete_statement //# TODO
   14.8 <update statement>
 ===============================================================================
 */
-update_statement //# TODO
+update_statement
   : UPDATE tb_name=identifier SET column_value_expression where_clause?
   ;
-column_value_expression //# TODO
+column_value_expression
   : value_expression ( COMMA value_expression)*
   ;
 
