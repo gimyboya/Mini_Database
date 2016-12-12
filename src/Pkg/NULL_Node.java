@@ -3,7 +3,7 @@ package Pkg;
 /**
  * Created by gimy on 12/12/2016.
  */
-public class NULL_Node implements SqlStatementNode{
+public class NULL_Node extends SqlStatementNode{
 
     private boolean Null;
 

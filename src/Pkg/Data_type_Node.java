@@ -3,7 +3,7 @@ package Pkg;
 /**
  * Created by gimy on 12/12/2016.
  */
-public class Data_type_Node implements SqlStatementNode{
+public class Data_type_Node extends SqlStatementNode{
 
     private String Data_type;
 

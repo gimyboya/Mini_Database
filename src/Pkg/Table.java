@@ -19,6 +19,8 @@ public class Table {
             Attributes.put(Column_names.getFirst(), new LinkedList());
             Column_names.pop();
         }
+
+        System.out.println("columns initialized!");
     }
 
     public void Insert_All(LinkedList values){

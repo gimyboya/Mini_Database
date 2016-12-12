@@ -3,7 +3,7 @@ package Pkg;
 /**
  * Created by gimy on 12/12/2016.
  */
-public class tb_name_Node implements SqlStatementNode {
+public class tb_name_Node extends SqlStatementNode {
 
     private String tb_name;
 
@@ -19,4 +19,5 @@ public class tb_name_Node implements SqlStatementNode {
     public int getType() {
         return SqlStatementNode.tb_name_Node;
     }
+
 }

@@ -3,7 +3,7 @@ package Pkg;
 /**
  * Created by gimy on 12/12/2016.
  */
-public class unsigned_value_Node implements SqlStatementNode{
+public class unsigned_value_Node extends SqlStatementNode{
     private String unsigned_value;
 
     public unsigned_value_Node(String unsigned_value) {

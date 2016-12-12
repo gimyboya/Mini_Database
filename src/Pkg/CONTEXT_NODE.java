@@ -3,7 +3,7 @@ package Pkg;
 /**
  * Created by gimy on 12/12/2016.
  */
-public class CONTEXT_NODE implements SqlStatementNode{
+public class CONTEXT_NODE extends SqlStatementNode{
 
 
     public static final int

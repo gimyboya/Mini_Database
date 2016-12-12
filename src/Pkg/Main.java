@@ -34,6 +34,29 @@ public class Main {
 
             System.out.println(parser.ParsedNodes);
 
+            Schema schema = new Schema();// creating a schema
+
+            if(parser.ParsedNodes.getFirst().getContext() == Tokenizer.Token.CREATE){
+
+                parser.ParsedNodes.pop();
+                String tb_name = parser.ParsedNodes.getFirst().getTb_name();
+
+                schema.creat_table(tb_name); // creating the table;
+                parser.ParsedNodes.pop();
+
+                LinkedList Column_names = new LinkedList();
+                for (SqlStatementNode parsedNode : parser.ParsedNodes) {
+                    if(parsedNode.getType() == Tokenizer.Token.Identifier){
+                        Column_names.add(parsedNode.getColumn_name());
+                    }
+                }
+
+
+                schema.getTable(tb_name).initialize_Columns(Column_names);
+
+
+            }
+
             for (int i = 0; i < tokenizer.getTokens().size(); i++) {
 
                // System.out.println("" + tokenizer.getTokens().get(i).sequence + " " + tokenizer.getTokens().get(i).tokenCode);

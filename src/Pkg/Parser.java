@@ -13,7 +13,7 @@ public class Parser {
     LinkedList<Tokenizer.Token> TokensToParse;
     Tokenizer.Token LookAhead;
 
-    ArrayList<SqlStatementNode> ParsedNodes = new ArrayList();
+    LinkedList<SqlStatementNode> ParsedNodes = new LinkedList<>();
     Tokenizer.Token lastPoped;
 
     public void parse(LinkedList<Tokenizer.Token> tokens)

@@ -19,6 +19,9 @@ public class Schema {
         System.out.println("Table '" + tb_name + "' deleted!");
     }
 
+    public Table getTable(String tb_name){
+        return TableSheme.get(tb_name);
+    }
     public void PrintTablSheme(){
         for(String tb_name: TableSheme.keySet()){
             System.out.println(tb_name);

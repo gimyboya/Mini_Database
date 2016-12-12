@@ -3,7 +3,7 @@ package Pkg;
 /**
  * Created by gimy on 12/12/2016.
  */
-public class TRUEFALSE_Node implements SqlStatementNode {
+public class TRUEFALSE_Node extends SqlStatementNode {
 
     private boolean truth_value;
 

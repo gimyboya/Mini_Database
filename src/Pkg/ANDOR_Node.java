@@ -3,7 +3,7 @@ package Pkg;
 /**
  * Created by gimy on 12/12/2016.
  */
-public class ANDOR_Node implements SqlStatementNode{
+public class ANDOR_Node extends SqlStatementNode{
     private String ANDOR;
 
     public ANDOR_Node(String ANDOR) {
