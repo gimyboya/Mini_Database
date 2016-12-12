@@ -19,9 +19,9 @@ sql
   ;
 
 statement
-  : data_statement //select
-  | data_change_statement //insert delete update
-  | schema_statement //create drop
+  : data_statement
+  | data_change_statement
+  | schema_statement
   ;
 
 
@@ -37,11 +37,11 @@ schema_statement
   ;
 
 create_table_statement
-  : CREATE TABLE identifier (LEFT_PAREN field_element (COMMA field_element)* RIGHT_PAREN)?
+  : CREATE TABLE tb_name=identifier (LEFT_PAREN field_element (COMMA field_element)* RIGHT_PAREN)?
   ;
 
 field_element
-  : name=identifier data_type
+  : column_name=identifier data_type
   ;
 
 /*
@@ -51,7 +51,7 @@ field_element
 */
 
 drop_table_statement
-  : DROP TABLE identifier
+  : DROP TABLE tb_name=identifier
   ;
 
 /*
@@ -105,14 +105,14 @@ data_type
   ;
 
 character_string_type
-  : CHARACTER type_length?
-  | CHAR type_length?
-  | VARCHAR type_length?
-  | TEXT
+  : type=CHARACTER type_length?
+  | type=CHAR type_length?
+  | type=VARCHAR type_length?
+  | type=TEXT
   ;
 
 type_length
-  : LEFT_PAREN NUMBER RIGHT_PAREN
+  : LEFT_PAREN v=NUMBER RIGHT_PAREN
   ;
 
 
@@ -121,23 +121,23 @@ numeric_type
   ;
 
 exact_numeric_type
-  : NUMERIC
-  | DECIMAL
-  | DEC
-  | INT
-  | INTEGER
+  : type=NUMERIC
+  | type=DECIMAL
+  | type=DEC
+  | type=INT
+  | type=INTEGER
   ;
 
 approximate_numeric_type
-  : FLOAT
-  | REAL
-  | DOUBLE
+  : type=FLOAT
+  | type=REAL
+  | type=DOUBLE
   ;
 
 
 boolean_type
-  : BOOLEAN
-  | BOOL
+  : type=BOOLEAN
+  | type=BOOL
   ;
 
 /*
@@ -147,10 +147,10 @@ boolean_type
 */
 
 value
-  : unsigned_literal //strings
-  | signed_number
-  | is_clause
-  | truth_value//column_reference
+  : v=unsigned_literal //strings
+  | v=signed_number
+  | v=is_clause
+  | v=truth_value//column_reference
   ;
 
 /*
@@ -165,7 +165,7 @@ unsigned_numeric_literal
   ;
 
 
-signed_number // # TODO
+signed_number
     : (PLUS | MINUS) unsigned_numeric_literal
     ;
 /*
@@ -174,7 +174,7 @@ signed_number // # TODO
 ===============================================================================
 */
 value_expression
-  : var=identifier EQUAL value
+  : column_name=identifier EQUAL v=value
   ;
 
 /*
@@ -232,7 +232,7 @@ table_expression
 */
 
 from_clause
-  : FROM identifier
+  : FROM tb_name=identifier
   ;
 
 /*
@@ -242,7 +242,7 @@ from_clause
 */
 
 column_name_list //#
-  :  identifier  ( COMMA identifier  )*
+  :  column_name=identifier  ( COMMA column_name=identifier  )*
   ;
 
 
@@ -252,7 +252,7 @@ column_name_list //#
 ===============================================================================
 */
 where_clause
-  : WHERE comparison_predicate ((AND|OR) comparison_predicate )?
+  : WHERE comparison_predicate (c=(AND|OR) comparison_predicate )?
   ;
 
 /*
@@ -266,13 +266,13 @@ data_statement
   ;
 
 select_list
-  : identifier (COMMA identifier)*
+  : column_name=identifier (COMMA column_name=identifier)*
   | qualified_asterisk
   ;
 
 
 qualified_asterisk
-  : MULTIPLY
+  : column_name=MULTIPLY
   ;
 
 /*
@@ -290,8 +290,8 @@ qualified_asterisk
 ===============================================================================
 */
 comparison_predicate
-  : left=identifier c=comp_op right=value
-  | left=identifier right=is_clause
+  : column_name=identifier c=comp_op right=value
+  | column_name=identifier right=is_clause
   ;
 
 comp_op
@@ -325,7 +325,7 @@ orderby_clause
 
 
 sort_specifier
-  : key=identifier order=order_specification? null_order=null_ordering?
+  : column_name=identifier order=order_specification? null_order=null_ordering?
   ;
 
 order_specification
@@ -345,11 +345,11 @@ null_ordering
 ===============================================================================
 */
 
-insert_statement //# TODO
+insert_statement
   : INSERT INTO tb_name=identifier (LEFT_PAREN column_name_list RIGHT_PAREN)? (VALUES LEFT_PAREN insert_value_list RIGHT_PAREN)
   ;
 
-insert_value_list //# TODO
+insert_value_list
   : value  ( COMMA value )*
   ;
 
@@ -481,9 +481,6 @@ INTO : I N T O;
 IS : I S;
 
 
-
-LEFT : L E F T;
-
 NOT : N O T;
 NULL : N U L L;
 
@@ -506,15 +503,11 @@ WHERE : W H E R E;
   Non Reserved Keywords
 ===============================================================================
 */
-AVG : A V G;
 
 BY : B Y;
 
 
 CHARACTER : C H A R A C T E R;
-
-
-COUNT : C O U N T;
 
 
 DEC : D E C;
@@ -531,11 +524,6 @@ INSERT : I N S E R T;
 
 LAST : L A S T;
 
-MAX : M A X;
-MIN : M I N;
-
-
-SUM : S U M;
 
 UNKNOWN : U N K N O W N;
 
@@ -563,10 +551,6 @@ DECIMAL : D E C I M A L; // alias for number
 
 CHAR : C H A R;
 VARCHAR : V A R C H A R;
-
-DATE : D A T E;
-TIME : T I M E;
-TIMESTAMP : T I M E S T A M P;
 
 TEXT : T E X T;
 

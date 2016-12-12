@@ -20,7 +20,7 @@ public class Main {
 
         try
         {
-            tokenizer.tokenize("UPDATE weather SET Column1 = 'Value1', Column2 = 'Value2';");
+            tokenizer.tokenize("");
 
             Parser parser = new Parser();
             parser.parse(tokenizer.getTokens());

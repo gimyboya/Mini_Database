@@ -21,7 +21,7 @@ public class Parser {
         sql();
 
         if (LookAhead.tokenCode != Tokenizer.Token.EOF)
-            throw new ParserException("Unexpected '"+ LookAhead +"' found, Expecting EOF");
+            throw new ParserException("Unexpected '"+ LookAhead.sequence +"' found, Expecting EOF");
     }
 
     private void nextToken()
@@ -34,6 +34,16 @@ public class Parser {
             LookAhead = new Tokenizer.Token(Tokenizer.Token.EOF, "");//at the end we return an end of line
         else
             LookAhead = TokensToParse.getFirst();
+    }
+
+    public interface SqlStatmentNode {
+        public static final int
+                CONTEXT_NODE=1,Identifier_Node=2,Value_Node=3,Assign_Node=4,
+                Compare_Node=5,Boolean_Node=6,Boolean_Expression_Node=7;
+
+        public int getType();
+        public int getContext();
+        public double getValue();
     }
 
     private void sql(){
@@ -61,7 +71,7 @@ public class Parser {
          ;
          */
         if(LookAhead.tokenCode == Tokenizer.Token.SELECT){
-            data_statement();
+            select_statement();
             return 1;
         }else if(LookAhead.tokenCode == Tokenizer.Token.INSERT ||
                  LookAhead.tokenCode == Tokenizer.Token.UPDATE ||
@@ -78,24 +88,24 @@ public class Parser {
 
     }
 
-    private int data_statement(){
+    private int select_statement(){
         /**
          * data_statement
          : SELECT DISTINCT? select_list table_expression?
          ;
          */
-        if(LookAhead.tokenCode == Tokenizer.Token.SELECT){ //check if it's a select statement
+        if(LookAhead.tokenCode == Tokenizer.Token.SELECT){
             nextToken();
             if(LookAhead.tokenCode == Tokenizer.Token.DISTINCT){
                 nextToken();
 
                 if(     LookAhead.tokenCode == Tokenizer.Token.Identifier ||
-                        LookAhead.tokenCode == Tokenizer.Token.MULTIPLY){ //# TODO
+                        LookAhead.tokenCode == Tokenizer.Token.MULTIPLY){
                     select_list();
                 }else{
                     throw new ParserException("Unexpected symbol '"+LookAhead.sequence+"' found, Expecting an Identifier or an '*'");
                 }
-                if(LookAhead.tokenCode == Tokenizer.Token.FROM){ //# TODO
+                if(LookAhead.tokenCode == Tokenizer.Token.FROM){
                     table_expression();
                 }else{
                     throw new ParserException("Unexpected symbol '"+LookAhead.sequence+"' found, Expecting FROM keyword");
@@ -103,16 +113,16 @@ public class Parser {
 
             }else{
 
-                if(     LookAhead.tokenCode == Tokenizer.Token.Identifier ||
+                if(   LookAhead.tokenCode == Tokenizer.Token.Identifier ||
                         LookAhead.tokenCode == Tokenizer.Token.MULTIPLY){
                     select_list();
+                    if(LookAhead.tokenCode == Tokenizer.Token.FROM){
+                        table_expression();
+                    }else{
+                        throw new ParserException("Unexpected symbol '"+LookAhead.sequence+"' found, Expecting FROM keyword");
+                    }
                 }else{
                     return 0;
-                }
-                if(LookAhead.tokenCode == Tokenizer.Token.FROM){
-                    table_expression();
-                }else{
-                    throw new ParserException("Unexpected symbol '"+LookAhead.sequence+"' found, Expecting FROM keyword");
                 }
             }
             return 1;
@@ -139,6 +149,7 @@ public class Parser {
 
             return 1;
         }else if(LookAhead.tokenCode == Tokenizer.Token.MULTIPLY){
+            nextToken();
             return 2;
         }else{
             return 0;
@@ -372,7 +383,6 @@ public class Parser {
             nextToken();
             return 1;
         }else{
-            System.out.println("Unexpected symbol '"+LookAhead.sequence+"' found, Expecting a truth value: TRUE | FALSE | UNKNOWN"); // # // FIXME: 12/11/2016 no exception thrown
             return 0;
         }
 
@@ -403,7 +413,7 @@ public class Parser {
                         LookAhead.tokenCode == Tokenizer.Token.PLUS ||
                         LookAhead.tokenCode == Tokenizer.Token.MINUS ||
                         LookAhead.tokenCode == Tokenizer.Token.IS ||
-                        LookAhead.tokenCode == Tokenizer.Token.NULL){ //# TODO
+                        LookAhead.tokenCode == Tokenizer.Token.NULL){
                     value();
                 }else {
                     throw new ParserException("Unexpected symbol '"+LookAhead.sequence+"' found, Expecting a value");
@@ -789,7 +799,7 @@ public class Parser {
          */
         if(LookAhead.tokenCode == Tokenizer.Token.Identifier){
             while (LookAhead.tokenCode == Tokenizer.Token.Identifier){
-                field_element();
+                identifier();
                 if(LookAhead.tokenCode == Tokenizer.Token.COMMA){
                     nextToken();
                 }
@@ -869,6 +879,10 @@ public class Parser {
             if(LookAhead.tokenCode == Tokenizer.Token.NULL){
                 null_ordering();
             }
+
+            if(LookAhead.tokenCode == Tokenizer.Token.COMMA){
+                throw new ParserException("ERROR: We accept only one sort specifier in the ORDER BY clause");
+            }
             return 1;
         }else{
             return 0;
@@ -915,7 +929,7 @@ public class Parser {
 
     private int insert_statement(){// # TODO we may save the info here
         /**
-         insert_statement //# TODO
+         insert_statement
          : INSERT INTO tb_name=identifier (LEFT_PAREN column_name_list RIGHT_PAREN)? (VALUES LEFT_PAREN insert_value_list RIGHT_PAREN)
          ;
          */

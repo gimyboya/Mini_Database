@@ -39,17 +39,14 @@ public class Tokenizer
     public static class Token { //this class will help store token sequence that where matched in the input and will help identifying their code
 
         public static final int
-                EOF = 0,AND=1, ASC=2, CREATE=3, DELETE=4, DESC=5, DISTINCT=6, FALSE=7, FROM=8,
-                INTO=9, IS=10, LEFT=11, NOT=12, NULL=13, OR=14, ORDER=15, RIGHT=16, SELECT=17,
-                SET=18, TABLE=19, TRUE=20, UPDATE=21, WHERE=22, AVG=23, BY=24, CHARACTER=25,
-                COUNT=26, DEC=27, DROP=28, FIRST=29, INSERT=30, LAST=31, MAX=32, MIN=33,
-                SUM=34, UNKNOWN=35, VALUES=36, BOOLEAN=37, BOOL=38, INT=39, INTEGER=40,
-                REAL=41, FLOAT=42, DOUBLE=43, NUMERIC=44, DECIMAL=45, CHAR=46, VARCHAR=47,
-                DATE=48, TIME=49, TIMESTAMP=50, TEXT=51, ASSIGN=52, EQUAL=53, COLON=54,
-                SEMI_COLON=55, COMMA=56, NOT_EQUAL=58, LTH=59,
-                LEQ=60, GTH=61, GEQ=62, LEFT_PAREN=63, RIGHT_PAREN=64, PLUS=65, MINUS=66,
-                MULTIPLY=67, DIVIDE=68, MODULAR=69, DOT=70, UNDERLINE=71, VERTICAL_BAR=72,
-                QUOTE=73, NUMBER=74, REAL_NUMBER=75, Identifier=76, Character_String_Literal=77;
+                EOF = 0,AND=1,ASC=2,CREATE=3,DELETE=4,DESC=5,DISTINCT=6,FALSE=7,FROM=8,INTO=9,IS=10,NOT=11
+                ,NULL=12,OR=13,ORDER=14,RIGHT=15,SELECT=16,SET=17,TABLE=18,TRUE=19,UPDATE=20,WHERE=21
+                ,BY=22,CHARACTER=23,DEC=24,DROP=25,FIRST=26,INSERT=27,LAST=28,UNKNOWN=29,VALUES=30
+                ,BOOLEAN=31,BOOL=32,INT=33,INTEGER=34,REAL=35,FLOAT=36,DOUBLE=37,NUMERIC=38,DECIMAL=39,CHAR=40
+                ,VARCHAR=41,TEXT=42,ASSIGN=43,EQUAL=44,COLON=45,SEMI_COLON=46,COMMA=47,NOT_EQUAL=48,LTH=49
+                ,LEQ=50,GTH=51,GEQ=52,LEFT_PAREN=53,RIGHT_PAREN=54,PLUS=55,MINUS=56,MULTIPLY=57,DIVIDE=58,MODULAR=59
+                ,DOT=60,UNDERLINE=61,VERTICAL_BAR=62,QUOTE=63,NUMBER=64,REAL_NUMBER=65
+                ,Identifier=66,Character_String_Literal=67;
 
         public final int tokenCode;
         public final String sequence;
