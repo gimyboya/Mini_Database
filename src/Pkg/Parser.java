@@ -2,6 +2,7 @@ package Pkg;
 
 import jdk.nashorn.internal.runtime.ParserException;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -11,6 +12,9 @@ public class Parser {
 
     LinkedList<Tokenizer.Token> TokensToParse;
     Tokenizer.Token LookAhead;
+
+    ArrayList<SqlStatementNode> ParsedNodes = new ArrayList();
+    Tokenizer.Token lastPoped;
 
     public void parse(LinkedList<Tokenizer.Token> tokens)
     {
@@ -26,8 +30,9 @@ public class Parser {
 
     private void nextToken()
     {
-        Tokenizer.Token lastPoped;
+
         lastPoped = TokensToParse.pop();
+
         System.out.println("Last Popped: " + lastPoped.sequence);
 
         if (TokensToParse.isEmpty()) //when the input is empty
@@ -36,15 +41,6 @@ public class Parser {
             LookAhead = TokensToParse.getFirst();
     }
 
-    public interface SqlStatmentNode {
-        public static final int
-                CONTEXT_NODE=1,Identifier_Node=2,Value_Node=3,Assign_Node=4,
-                Compare_Node=5,Boolean_Node=6,Boolean_Expression_Node=7;
-
-        public int getType();
-        public int getContext();
-        public double getValue();
-    }
 
     private void sql(){
         /**
@@ -482,10 +478,13 @@ public class Parser {
 
         if(LookAhead.tokenCode == Tokenizer.Token.CREATE){
             nextToken();
+            ParsedNodes.add(new CONTEXT_NODE(CONTEXT_NODE.CREATE));
+
             if(LookAhead.tokenCode == Tokenizer.Token.TABLE){
                 nextToken();
                 if(LookAhead.tokenCode == Tokenizer.Token.Identifier){
                     identifier();
+                    ParsedNodes.add(new tb_name_Node(lastPoped.sequence));
                 }else{
                     throw new ParserException("Unexpected symbol '"+LookAhead.sequence+"' found, Expecting an identifier after the keyword TABLE");
                 }
@@ -520,7 +519,7 @@ public class Parser {
 
     private int identifier(){ //# TODO think how to return the Identifier
         if(LookAhead.tokenCode == Tokenizer.Token.Identifier){
-           nextToken();
+            nextToken();
             return 1;
         }else{
             System.out.println("Unexpected symbol '"+LookAhead.sequence+"' found, Expecting an Identifier");
@@ -531,11 +530,13 @@ public class Parser {
     private int field_element(){
         /**
          * field_element
-         : name=identifier data_type
+         : column_name=identifier data_type
          ;
          */
         if(LookAhead.tokenCode == Tokenizer.Token.Identifier){
-            identifier(); //# TODO identifier needs to be stored somewhere maybe the function should return a Token
+            identifier();
+            ParsedNodes.add(new column_name_Node(lastPoped.sequence));
+
             if(     LookAhead.tokenCode == Tokenizer.Token.CHARACTER ||
                     LookAhead.tokenCode == Tokenizer.Token.CHAR ||
                     LookAhead.tokenCode == Tokenizer.Token.VARCHAR ||
@@ -575,6 +576,7 @@ public class Parser {
                 LookAhead.tokenCode == Tokenizer.Token.VARCHAR ||
                 LookAhead.tokenCode == Tokenizer.Token.TEXT){
             character_string_type();
+            ParsedNodes.add(new Data_type_Node(lastPoped.sequence));
             return 1;
         }else if(LookAhead.tokenCode == Tokenizer.Token.NUMERIC ||
                 LookAhead.tokenCode == Tokenizer.Token.DECIMAL ||
@@ -585,10 +587,12 @@ public class Parser {
                 LookAhead.tokenCode == Tokenizer.Token.REAL ||
                 LookAhead.tokenCode == Tokenizer.Token.DOUBLE){
             numeric_type();
+            ParsedNodes.add(new Data_type_Node(lastPoped.sequence));
             return 2;
         }else if(LookAhead.tokenCode == Tokenizer.Token.BOOLEAN ||
                 LookAhead.tokenCode == Tokenizer.Token.BOOL){
             boolean_type();
+            ParsedNodes.add(new Data_type_Node(lastPoped.sequence));
             return 3;
         }else{
             return 0;

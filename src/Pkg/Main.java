@@ -20,10 +20,19 @@ public class Main {
 
         try
         {
-            tokenizer.tokenize("");
+            tokenizer.tokenize("CREATE TABLE Persons\n" +
+                    "(\n" +
+                    "PersonID int,\n" +
+                    "LastName varchar(255),\n" +
+                    "FirstName varchar(255),\n" +
+                    "Address varchar(255),\n" +
+                    "City varchar(255)\n" +
+                    ");");
 
             Parser parser = new Parser();
             parser.parse(tokenizer.getTokens());
+
+            System.out.println(parser.ParsedNodes);
 
             for (int i = 0; i < tokenizer.getTokens().size(); i++) {
 
