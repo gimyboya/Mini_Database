@@ -220,16 +220,19 @@ public class Parser {
                 LookAhead.tokenCode == Tokenizer.Token.FALSE ||
                 LookAhead.tokenCode == Tokenizer.Token.UNKNOWN){
             unsigned_literal();
+            ParsedNodes.add(new unsigned_value_Node(lastPoped.sequence));
             return 1;
         }else if(LookAhead.tokenCode == Tokenizer.Token.PLUS ||
                 LookAhead.tokenCode == Tokenizer.Token.MINUS){
             signed_number();
+            ParsedNodes.add(new signed_value_Node(Double.parseDouble(lastPoped.sequence)));
             return 2;
         }else if(LookAhead.tokenCode == Tokenizer.Token.IS){
             is_clause();
             return 3;
         }else if(LookAhead.tokenCode == Tokenizer.Token.NULL){
             nextToken();
+            ParsedNodes.add(new NULL_Node(lastPoped.sequence));
             return 4;
         }else{
             return 0;
@@ -346,6 +349,11 @@ public class Parser {
                         LookAhead.tokenCode == Tokenizer.Token.UNKNOWN ||
                         LookAhead.tokenCode == Tokenizer.Token.NULL){
                     truth_value();
+                    if(lastPoped.tokenCode == Tokenizer.Token.TRUE){
+                        ParsedNodes.add(new TRUEFALSE_Node("false"));
+                    }else if(lastPoped.tokenCode == Tokenizer.Token.FALSE){
+                        ParsedNodes.add(new TRUEFALSE_Node("true"));
+                    }
                 }else {
                     return 0;
                 }
@@ -355,6 +363,11 @@ public class Parser {
                         LookAhead.tokenCode == Tokenizer.Token.UNKNOWN ||
                         LookAhead.tokenCode == Tokenizer.Token.NULL){
                     truth_value();
+                    if(lastPoped.tokenCode == Tokenizer.Token.TRUE){
+                        ParsedNodes.add(new TRUEFALSE_Node("true"));
+                    }else if(lastPoped.tokenCode == Tokenizer.Token.FALSE){
+                        ParsedNodes.add(new TRUEFALSE_Node("false"));
+                    }
                 }else {
                     return 0;
                 }
@@ -478,6 +491,7 @@ public class Parser {
 
         if(LookAhead.tokenCode == Tokenizer.Token.CREATE){
             nextToken();
+            ParsedNodes.clear();
             ParsedNodes.add(new CONTEXT_NODE(CONTEXT_NODE.CREATE));
 
             if(LookAhead.tokenCode == Tokenizer.Token.TABLE){
@@ -804,6 +818,7 @@ public class Parser {
         if(LookAhead.tokenCode == Tokenizer.Token.Identifier){
             while (LookAhead.tokenCode == Tokenizer.Token.Identifier){
                 identifier();
+                ParsedNodes.add(new column_name_Node(lastPoped.sequence));
                 if(LookAhead.tokenCode == Tokenizer.Token.COMMA){
                     nextToken();
                 }
@@ -940,10 +955,13 @@ public class Parser {
 
         if(LookAhead.tokenCode == Tokenizer.Token.INSERT){
             nextToken();
+            ParsedNodes.clear();
+            ParsedNodes.add(new CONTEXT_NODE(CONTEXT_NODE.SELECT));
             if(LookAhead.tokenCode == Tokenizer.Token.INTO){
                 nextToken();
                 if(LookAhead.tokenCode == Tokenizer.Token.Identifier){
                     identifier();
+                    ParsedNodes.add(new tb_name_Node(lastPoped.sequence));
                     if(LookAhead.tokenCode == Tokenizer.Token.LEFT_PAREN){
                         nextToken();
                         if(LookAhead.tokenCode == Tokenizer.Token.Identifier){
@@ -1126,10 +1144,13 @@ public class Parser {
          */
         if(LookAhead.tokenCode == Tokenizer.Token.DROP){
             nextToken();
+            ParsedNodes.clear();
+            ParsedNodes.add(new CONTEXT_NODE(CONTEXT_NODE.DROP));
             if(LookAhead.tokenCode == Tokenizer.Token.TABLE){
                 nextToken();
                 if(LookAhead.tokenCode == Tokenizer.Token.Identifier){
                     identifier();
+                    ParsedNodes.add(new tb_name_Node(lastPoped.sequence));
                 }
             }else{
                 throw new ParserException("Unexpected symbol '"+LookAhead.sequence+"' found, Expecting an 'TABLE'");

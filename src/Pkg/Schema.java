@@ -1,6 +1,7 @@
 package Pkg;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  * Created by gimy on 12/13/2016.
@@ -8,8 +9,12 @@ import java.util.HashMap;
 public class Schema {
     HashMap<String, Table > TableSheme = new HashMap<>(); // tb_name -> table
 
-    public void creat_table(String tb_name){
-        TableSheme.put(tb_name, new Table());
+    public Schema() {
+        TableSheme = new HashMap<>();
+    }
+
+    public void creat_table(String tb_name, LinkedList<String> Column_names){
+        TableSheme.put(tb_name, new Table().initialize_Columns(Column_names));
         System.out.println("Table '" + tb_name + "' created!");
     }
 
@@ -25,6 +30,14 @@ public class Schema {
     public void PrintTablSheme(){
         for(String tb_name: TableSheme.keySet()){
             System.out.println(tb_name);
+        }
+    }
+
+    public boolean hasTable(String tb_name){
+        if(TableSheme.containsKey(tb_name)){
+            return true;
+        }else {
+            return false;
         }
     }
 }
