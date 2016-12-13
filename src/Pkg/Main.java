@@ -3,6 +3,7 @@ package Pkg;
 import jdk.nashorn.internal.runtime.ParserException;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -38,16 +39,16 @@ public class Main {
                 queries = fileHandler.readSql();
                 fileHandler.closeFile();
 
+
                 for (int i = 0; i < queries.size(); i++) {
                     tokenizer.tokenize(queries.get(i));
 
                     try
                     {
-                        tokenizer.tokenize("UPDATE Weather SET AverageTemperature = 20;");
 
 
                         System.out.println("the sql query has been broken into tokenz : ");
-                        for (int j = 0; j < tokenizer.getTokens().size(); i++) {
+                        for (int j = 0; j < tokenizer.getTokens().size(); j++) {
 
                             System.out.print(tokenizer.getTokens().get(j).sequence + "=" + tokenizer.getTokens().get(j).tokenCode + ", ");
                         }
@@ -72,15 +73,18 @@ public class Main {
 
                             LinkedList<String> Column_names = new LinkedList<>();
                             LinkedList<String> Data_types = new LinkedList<>();
-                            for (SqlStatementNode parsedNode : parser.ParsedNodes) {
-                                if(parsedNode.getType() == SqlStatementNode.column_name_Node){
-                                    Column_names.add(parsedNode.getColumn_name());
+
+                            for (int i1 = 0; i1 < parser.ParsedNodes.size(); i1++) {
+                                if(parser.ParsedNodes.getFirst().getType() == SqlStatementNode.column_name_Node){
+                                    Column_names.add(parser.ParsedNodes.getFirst().getColumn_name());
                                     parser.ParsedNodes.pop();
-                                }else if(parsedNode.getType() == SqlStatementNode.Data_type_Node){
-                                    Data_types.add(parsedNode.get_Data_type());
+                                }else if(parser.ParsedNodes.getFirst().getType() == SqlStatementNode.Data_type_Node){
+                                    Data_types.add(parser.ParsedNodes.getFirst().get_Data_type());
                                     parser.ParsedNodes.pop();
                                 }
                             }
+
+
 
 
 
@@ -98,18 +102,20 @@ public class Main {
                                 parser.ParsedNodes.pop();
                                 LinkedList Column_names = new LinkedList();
                                 LinkedList values = new LinkedList();
-                                for (SqlStatementNode parsedNode : parser.ParsedNodes) {
-                                    if(parsedNode.getType() == SqlStatementNode.column_name_Node){
-                                        Column_names.add(parsedNode.getColumn_name());
+
+                                for (int i1 = 0; i1 < parser.ParsedNodes.size(); i1++) {
+                                    if(parser.ParsedNodes.getFirst().getType() == SqlStatementNode.column_name_Node){
+                                        Column_names.add(parser.ParsedNodes.getFirst().getColumn_name());
                                         parser.ParsedNodes.pop();
-                                    }else if(parsedNode.getType() == SqlStatementNode.signed_value_Node ||
-                                            parsedNode.getType() == SqlStatementNode.unsigned_value_Node ||
-                                            parsedNode.getType() == SqlStatementNode.TRUEFALS_Node ||
-                                            parsedNode.getType() == SqlStatementNode.NULL_Node){
-                                        values.add(parsedNode.get_value());
+                                    }else if(parser.ParsedNodes.getFirst().getType() == SqlStatementNode.signed_value_Node ||
+                                            parser.ParsedNodes.getFirst().getType() == SqlStatementNode.unsigned_value_Node ||
+                                            parser.ParsedNodes.getFirst().getType() == SqlStatementNode.TRUEFALS_Node ||
+                                            parser.ParsedNodes.getFirst().getType() == SqlStatementNode.NULL_Node){
+                                        values.add(parser.ParsedNodes.getFirst().get_value());
                                         parser.ParsedNodes.pop();
                                     }
                                 }
+
 
                                 if(Column_names.isEmpty()){
                                     schema.getTable(tb_name).Insert_All(values);
@@ -146,15 +152,17 @@ public class Main {
 
                             LinkedList Column_names = new LinkedList();
                             LinkedList values = new LinkedList();
-                            for (SqlStatementNode parsedNode : parser.ParsedNodes) {
-                                if(parsedNode.getType() == SqlStatementNode.column_name_Node){
-                                    Column_names.add(parsedNode.getColumn_name());
+
+
+                            for (int i1 = 0; i1 < parser.ParsedNodes.size(); i1++) {
+                                if(parser.ParsedNodes.getFirst().getType() == SqlStatementNode.column_name_Node){
+                                    Column_names.add(parser.ParsedNodes.getFirst().getColumn_name());
                                     parser.ParsedNodes.pop();
-                                }else if(parsedNode.getType() == SqlStatementNode.signed_value_Node ||
-                                        parsedNode.getType() == SqlStatementNode.unsigned_value_Node ||
-                                        parsedNode.getType() == SqlStatementNode.TRUEFALS_Node ||
-                                        parsedNode.getType() == SqlStatementNode.NULL_Node){
-                                    values.add(parsedNode.get_value());
+                                }else if(parser.ParsedNodes.getFirst().getType() == SqlStatementNode.signed_value_Node ||
+                                        parser.ParsedNodes.getFirst().getType() == SqlStatementNode.unsigned_value_Node ||
+                                        parser.ParsedNodes.getFirst().getType() == SqlStatementNode.TRUEFALS_Node ||
+                                        parser.ParsedNodes.getFirst().getType() == SqlStatementNode.NULL_Node){
+                                    values.add(parser.ParsedNodes.getFirst().get_value());
                                     parser.ParsedNodes.pop();
                                 }
                             }

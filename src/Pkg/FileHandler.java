@@ -58,7 +58,7 @@ public class FileHandler {
         while(scanner.hasNext()){
 
             try{
-                query = scanner.next();
+                query = scanner.next() + ";";
                 queries.add(query);
             }
             catch (IndexOutOfBoundsException e){

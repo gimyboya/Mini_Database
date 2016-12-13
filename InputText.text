@@ -1,0 +1,9 @@
+CREATE TABLE ForgeRock
+	(id int, productName varchar(7), description varchar(55))
+;
+	
+INSERT INTO ForgeRock
+	(id, productName, description)
+VALUES
+	('1', 'OpenIDM', 'Platform for building enterprise provisioning solutions')
+;

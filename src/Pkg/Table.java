@@ -24,7 +24,7 @@ public class Table {
 
         while (!Column_names.isEmpty()){
             this.Attributes.put(Column_names.getFirst(), new LinkedList());
-            System.out.println("Column " + Column_names.getFirst() + "created!");
+            System.out.println("Column " + Column_names.getFirst() + " created!");
             Column_names.pop();
 
         }
