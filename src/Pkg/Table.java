@@ -4,6 +4,7 @@ import jdk.nashorn.internal.runtime.ParserException;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Set;
 
 
 /**
@@ -21,6 +22,7 @@ public class Table {
     }
 
     public Table initialize_Columns(LinkedList<String> Column_names){
+
 
         while (!Column_names.isEmpty()){
             this.Attributes.put(Column_names.getFirst(), new LinkedList());
@@ -50,7 +52,8 @@ public class Table {
         while (!Column_names.isEmpty()){
             if(Attributes.containsKey(Column_names.getFirst())){
                 Attributes.get(Column_names.getFirst()) //we get the column name Values
-                        .add(values.getFirst()); // we assign a value
+                        .add(values.getFirst()); // we assign a single value
+                System.out.println("Value (" + values.getFirst() + ") inserted in column: "+ Column_names.getFirst());
             }else {
                 throw new ParserException("This Column: " + Column_names.getFirst()+ " does not exist!");
             }
@@ -58,6 +61,7 @@ public class Table {
             Column_names.pop();
         }
 
+        System.out.println("Table populated successfully!");
     }
 
     public void update_All_values_in_A_Column(LinkedList<String> Column_names, LinkedList values){
@@ -79,9 +83,28 @@ public class Table {
             }else {
                 throw new ParserException("This Column: " + Column_names.getFirst()+ " does not exist!");
             }
+            System.out.print("all the values in The Column " + Column_names.getFirst()+ " has been updated to the vale: " + values.getFirst() );
             values.pop();
             Column_names.pop();
         }
+    }
+
+    public void select_All(Table table){
+        
+        Set<String> Column_names = table.Attributes.keySet();
+        System.out.println("The set: " + Column_names);
+        for (String column_name : Column_names) {
+            System.out.print("||" + column_name + "\t||");
+            System.out.println("\n");
+            LinkedList c_values;
+            c_values = (LinkedList) table.Attributes.get(column_name).clone();
+
+            for (Object c_value : c_values) {
+                System.out.println(c_value);
+            }
+        }
+        
+
     }
 
 }

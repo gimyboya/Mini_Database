@@ -27,6 +27,7 @@ public class Schema {
     public void updat_table(String tb_name, LinkedList<String> Column_names, LinkedList values){
 
         TableSheme.get(tb_name).update_All_values_in_A_Column(Column_names,values);
+        System.out.print(" in table" + tb_name );
     }
 
     public void updat_table_where(){}
@@ -35,6 +36,7 @@ public class Schema {
         return TableSheme.get(tb_name);
     }
     public void PrintTablSheme(){
+        System.out.println("This schema contains: " + TableSheme.size() + " Table(s)");
         for(String tb_name: TableSheme.keySet()){
             System.out.println(tb_name);
         }
@@ -47,4 +49,5 @@ public class Schema {
             return false;
         }
     }
+
 }

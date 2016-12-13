@@ -3,6 +3,16 @@ for (String s : Column_names) {
 	System.out.println(s);
 }
 
+System.out.println("LookAhead: " + LookAhead.sequence);
+System.out.println("Last Popped: " + lastPoped.sequence);
+
+System.out.println("the sql query has been broken into tokenz : ");
+                        for (int j = 0; j < tokenizer.getTokens().size(); j++) {
+
+                            System.out.print(tokenizer.getTokens().get(j).sequence + "=" + tokenizer.getTokens().get(j).tokenCode + ", ");
+                        }
+						
+						
 Iterator<SqlStatementNode> iter = parser.ParsedNodes.iterator();// creating an iterator to avoid ConcurrentModificationException
 
                             while (iter.hasNext()){
@@ -15,4 +25,18 @@ Iterator<SqlStatementNode> iter = parser.ParsedNodes.iterator();// creating an i
                                     parser.ParsedNodes.pop();
                                 }
                                 iter.remove();
+                            }
+						
+int size = parser.ParsedNodes.size();
+
+                            for (int i1 = 0; i1 < size; i1++) {
+                                if(parser.ParsedNodes.peek().getType() == SqlStatementNode.column_name_Node){
+                                    Column_names.add(parser.ParsedNodes.peek().getColumn_name());
+                                    parser.ParsedNodes.pop();
+                                }else if(parser.ParsedNodes.peek().getType() == SqlStatementNode.Data_type_Node){
+                                    Data_types.add(parser.ParsedNodes.peek().get_Data_type());
+                                    parser.ParsedNodes.pop();
+                                }else{
+                                    System.out.println("say something");
+                                }
                             }

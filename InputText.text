@@ -1,9 +1,58 @@
 CREATE TABLE ForgeRock
-	(id int, productName varchar(7), description varchar(55))
+	(id int, productName varchar, description varchar)
 ;
-	
 INSERT INTO ForgeRock
 	(id, productName, description)
 VALUES
 	('1', 'OpenIDM', 'Platform for building enterprise provisioning solutions')
 ;
+INSERT INTO ForgeRock
+	(id, productName, description)
+VALUES
+	('2', 'closeIDM', 'something')
+;
+INSERT INTO ForgeRock
+	(id, productName, description)
+VALUES
+	('3', 'saitama', 'hero for fun')
+;
+INSERT INTO ForgeRock
+	(id, productName, description)
+VALUES
+	('4', 'fancy product', 'yes')
+;
+UPDATE ForgeRock 
+SET description = 'All discriptions are the same';
+SELECT
+  *
+FROM
+  ForgeRock;
+SELECT
+  productName,
+  description
+FROM
+  ForgeRock;
+CREATE TABLE Persons
+	(PersonID int, productName varchar, description varchar)
+;
+INSERT INTO Persons
+	(PersonID, LastName, description)
+VALUES
+	('1', 'OpenIDM', 'Platform for building enterprise provisioning solutions')
+;
+INSERT INTO Persons
+	(PersonID, LastName, description)
+VALUES
+	('2', 'closeIDM', 'something')
+;
+INSERT INTO Persons
+	(PersonID, LastName, description)
+VALUES
+	('3', 'saitama', 'hero for fun')
+;
+INSERT INTO Persons
+	(PersonID, LastName, description)
+VALUES
+	('4', 'fancy product', 'yes')
+;
+DROP TABLE ForgeRock;

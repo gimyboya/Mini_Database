@@ -9,7 +9,7 @@ public class CONTEXT_NODE extends SqlStatementNode{
     public static final int
             SELECT=16,CREATE=3,DELETE=4,
             INSERT=27,UPDATE=20,WHERE=21,
-            ORDERBY=14,DISTINCT=6,ASC=2,DESC =5, DROP = 25;
+            ORDERBY=14,DISTINCT=6,ASC=2,DESC =5, DROP = 25, MULTIPLY=57;
 
     private int Context;
 
@@ -26,8 +26,5 @@ public class CONTEXT_NODE extends SqlStatementNode{
         return Context;
     }
 
-    public int getConx() {
-        return Context;
-    }
 }
 
