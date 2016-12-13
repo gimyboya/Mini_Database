@@ -13,4 +13,6 @@ public class SqlStatementNode {
     public int getContext(){return 0;}
     public String getTb_name(){return null;}
     public String getColumn_name(){return null;}
+    public String get_value(){return null;}
+    public String get_Data_type(){return null;}
 }

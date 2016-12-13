@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.Scanner;
 
@@ -45,6 +46,28 @@ public class FileHandler {
 
         }
 
+    }
+
+    public ArrayList<String> readSql (){ //read the tokens information from the file
+
+        String query;
+        ArrayList<String> queries = new ArrayList<>();
+
+        scanner.useDelimiter(";");
+
+        while(scanner.hasNext()){
+
+            try{
+                query = scanner.next();
+                queries.add(query);
+            }
+            catch (IndexOutOfBoundsException e){
+
+            }
+
+        }
+
+        return queries;
     }
 
     public void openFileW (String fileName){ // to open a file for writing only

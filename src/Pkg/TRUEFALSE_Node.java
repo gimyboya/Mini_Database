@@ -5,14 +5,14 @@ package Pkg;
  */
 public class TRUEFALSE_Node extends SqlStatementNode {
 
-    private boolean truth_value;
+    private Boolean truth_value;
 
     public TRUEFALSE_Node(String truth_value) {
         this.truth_value = Boolean.parseBoolean(truth_value);
     }
 
-    public boolean getTruth_value() {
-        return truth_value;
+    public String get_value() {
+        return truth_value.toString();
     }
 
     @Override

@@ -51,10 +51,10 @@ public class Parser {
 
         statement();
 
-        if(LookAhead.tokenCode == Tokenizer.Token.SEMI_COLON){ //notice here that the semi column is optional
+        if(LookAhead.tokenCode == Tokenizer.Token.SEMI_COLON){
            nextToken();
         }else{
-            System.out.println("Warning!: Missing ';'");
+            throw new ParserException("ERROR: Missing ';'");
         }
     }
 
@@ -178,6 +178,7 @@ public class Parser {
          */
         if(LookAhead.tokenCode == Tokenizer.Token.Identifier){
             identifier();
+            ParsedNodes.add(new column_name_Node(lastPoped.sequence));
             if(LookAhead.tokenCode == Tokenizer.Token.EQUAL){
                 nextToken();
                 if(     LookAhead.tokenCode == Tokenizer.Token.NUMBER ||
@@ -232,7 +233,7 @@ public class Parser {
             return 3;
         }else if(LookAhead.tokenCode == Tokenizer.Token.NULL){
             nextToken();
-            ParsedNodes.add(new NULL_Node(lastPoped.sequence));
+            ParsedNodes.add(new NULL_Node("true"));
             return 4;
         }else{
             return 0;
@@ -353,6 +354,8 @@ public class Parser {
                         ParsedNodes.add(new TRUEFALSE_Node("false"));
                     }else if(lastPoped.tokenCode == Tokenizer.Token.FALSE){
                         ParsedNodes.add(new TRUEFALSE_Node("true"));
+                    }else if(lastPoped.tokenCode == Tokenizer.Token.NULL){
+                        ParsedNodes.add(new NULL_Node("false"));
                     }
                 }else {
                     return 0;
@@ -367,6 +370,8 @@ public class Parser {
                         ParsedNodes.add(new TRUEFALSE_Node("true"));
                     }else if(lastPoped.tokenCode == Tokenizer.Token.FALSE){
                         ParsedNodes.add(new TRUEFALSE_Node("false"));
+                    }else if(lastPoped.tokenCode == Tokenizer.Token.NULL){
+                        ParsedNodes.add(new NULL_Node("true"));
                     }
                 }else {
                     return 0;
@@ -1093,12 +1098,18 @@ public class Parser {
          */
         if(LookAhead.tokenCode == Tokenizer.Token.UPDATE){
             nextToken();
+            ParsedNodes.clear();
+            ParsedNodes.add(new CONTEXT_NODE(CONTEXT_NODE.UPDATE));
+
             if(LookAhead.tokenCode == Tokenizer.Token.Identifier){
                 identifier();
+                ParsedNodes.add(new tb_name_Node(lastPoped.sequence));
+
                 if(LookAhead.tokenCode == Tokenizer.Token.SET){
                     nextToken();
                     if(LookAhead.tokenCode == Tokenizer.Token.Identifier){
                         column_value_expression();
+
                         if(LookAhead.tokenCode == Tokenizer.Token.WHERE){
                             where_clause();
                         }

@@ -11,8 +11,8 @@ public class signed_value_Node extends SqlStatementNode {
         this.value = value;
     }
 
-    public Double getValue() {
-        return value;
+    public String get_value() {
+        return value.toString();
     }
 
     @Override

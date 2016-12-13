@@ -10,7 +10,7 @@ public class unsigned_value_Node extends SqlStatementNode{
         this.unsigned_value = unsigned_value;
     }
 
-    public String getUnsigned_value() {
+    public String get_value() {
         return unsigned_value;
     }
 
@@ -18,4 +18,6 @@ public class unsigned_value_Node extends SqlStatementNode{
     public int getType() {
         return SqlStatementNode.unsigned_value_Node;
     }
+
+
 }

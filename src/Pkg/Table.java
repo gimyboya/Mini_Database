@@ -49,7 +49,7 @@ public class Table {
 
         while (!Column_names.isEmpty()){
             if(Attributes.containsKey(Column_names.getFirst())){
-                Attributes.get(Column_names.getFirst()) //we get the column names
+                Attributes.get(Column_names.getFirst()) //we get the column name Values
                         .add(values.getFirst()); // we assign a value
             }else {
                 throw new ParserException("This Column: " + Column_names.getFirst()+ " does not exist!");
@@ -58,7 +58,30 @@ public class Table {
             Column_names.pop();
         }
 
+    }
 
+    public void update_All_values_in_A_Column(LinkedList<String> Column_names, LinkedList values){
+
+        while (!Column_names.isEmpty()){
+            if(Attributes.containsKey(Column_names.getFirst())){
+                 int size = Attributes.get(Column_names.getFirst()) //we get the column_name Values (linkedlist)
+                        .size(); //we get it's size
+
+                LinkedList temp = new LinkedList();//we create a temporary linked list to populate
+
+                for (int i = 0; i < size; i++) { // we assign the same value many times
+                    temp.add(values.getFirst());
+                }
+
+                Attributes.get(Column_names.getFirst()) //we get the column_name Values (linkedlist)
+                        .add(temp);// we assign the temp linked list as values
+
+            }else {
+                throw new ParserException("This Column: " + Column_names.getFirst()+ " does not exist!");
+            }
+            values.pop();
+            Column_names.pop();
+        }
     }
 
 }

@@ -24,6 +24,13 @@ public class Schema {
         System.out.println("Table '" + tb_name + "' deleted!");
     }
 
+    public void updat_table(String tb_name, LinkedList<String> Column_names, LinkedList values){
+
+        TableSheme.get(tb_name).update_All_values_in_A_Column(Column_names,values);
+    }
+
+    public void updat_table_where(){}
+
     public Table getTable(String tb_name){
         return TableSheme.get(tb_name);
     }

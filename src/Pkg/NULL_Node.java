@@ -11,8 +11,13 @@ public class NULL_Node extends SqlStatementNode{
         Null = Boolean.parseBoolean(truth);
     }
 
-    public boolean isNull() {
-        return Null;
+    public String get_value() {
+        if(Null){
+            return "NULL";
+        }else{
+            return "NOT NULL";
+        }
+
     }
 
     @Override

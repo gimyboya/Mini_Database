@@ -11,7 +11,7 @@ public class Data_type_Node extends SqlStatementNode{
         Data_type = data_type;
     }
 
-    public String getData_type() {
+    public String get_Data_type() {
         return Data_type;
     }
 
