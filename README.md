@@ -123,17 +123,27 @@ Order specification: `DESC, ASC`
 
 so far our program can execute the following commands:
 
-**CREAT TABLE**
+- [x] **CREAT TABLE**
 
-**DROP TABLE**
+- [x] **DROP TABLE**
 
-**INSERT INTO**
+- [x] **INSERT INTO**
 
-**UPDATE** 
+- [x] **UPDATE** 
 
-**SELECT **
+- [x] **SELECT **
 
 
 
+## TODO:
+
+- [ ] **WHERE**
+- [ ] **DISTINCT**
+- [ ] **DELETE**
+- [ ] **ORDER BY**
+- [ ] **AND & OR**
+- [ ] allowing the user to type the statements on multiple lines
 
 ###  Added features:
+
+Requirements are not all completed  yet.

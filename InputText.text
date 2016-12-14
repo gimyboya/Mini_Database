@@ -55,4 +55,4 @@ INSERT INTO Persons
 VALUES
 	('4', 'fancy product', 'yes')
 ;
-DROP TABLE ForgeRock;
+DROP TABLE Persons;
