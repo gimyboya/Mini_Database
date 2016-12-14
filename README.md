@@ -131,7 +131,7 @@ so far our program can execute the following commands:
 
 **UPDATE** 
 
-**SELECT *** 
+**SELECT **
 
 
 
