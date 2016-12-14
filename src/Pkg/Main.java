@@ -122,6 +122,8 @@ public class Main {
                             } else {
                                 if (Column_names.size() != values.size()) {
                                     throw new ParserException("ERROR: Number of values does not match number of columns!");
+                                }else if(Column_names.size() != schema.getTable(tb_name).numberOfattributes()){
+                                    System.out.println("NOTE: not all columns are listed here, thus the values of the other columns will be set to NULL by default");
                                 }
                                 schema.getTable(tb_name).Insert_Values_With_sp_Columns(Column_names, values); //inserting the values
                                 System.out.println("Table has been populated!");

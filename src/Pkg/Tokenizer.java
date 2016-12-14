@@ -65,16 +65,20 @@ public class Tokenizer
     private LinkedList<TokenInfo> tokenInfos;
     private LinkedList<Token> tokens;
 
-    public Tokenizer()
+    public Tokenizer()  //constructor
     {
         tokenInfos = new LinkedList<TokenInfo>();
         tokens = new LinkedList<Token>();
     }
 
+
+
     public void add(String regex, int tokenCode)//this will add tokens info to a linked list
     {
         tokenInfos.add(new TokenInfo(Pattern.compile("^("+regex+")", Pattern.CASE_INSENSITIVE), tokenCode)); //notice that the regex is compiled for performance and we match only the beginning of the input
     }
+
+
 
     public void tokenize(String str) //this will break the input into small tokens and add them to a linked list
     {
@@ -99,6 +103,8 @@ public class Tokenizer
             if (!match) throw new ParserException("Parsing unresolved : "+ input);
         }
     }
+
+
 
     public LinkedList<Token> getTokens()
     {

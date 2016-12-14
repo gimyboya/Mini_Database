@@ -47,17 +47,42 @@ public class Table {
 
     public void Insert_Values_With_sp_Columns(LinkedList<String> Column_names, LinkedList values){
 
-        while (!Column_names.isEmpty()){
-            if(Attributes.containsKey(Column_names.getFirst())){
-                Attributes.get(Column_names.getFirst()) //we get the column name Values
-                        .add(values.getFirst()); // we assign a single value
-                System.out.println("Value (" + values.getFirst() + ") inserted in column: "+ Column_names.getFirst());
-            }else {
-                throw new ParserException("This Column: " + Column_names.getFirst()+ " does not exist!");
+        String[] All_Column_nams = Attributes.keySet().toArray(new String[Attributes.keySet().size()]);
+
+
+
+        if(Attributes.keySet().size() != Column_names.size()){ //if not all the columns has been mentioned
+
+            for (int i = 0; i < All_Column_nams.length ; i++) {
+
+                if(All_Column_nams[i].matches(Column_names.getFirst())){
+                    Attributes.get(Column_names.getFirst()) //we get the column name Values
+                            .add(values.getFirst()); // we assign a single value
+                    System.out.println("Value (" + values.getFirst() + ") inserted in column: "+ Column_names.getFirst());
+                    values.pop();
+                    Column_names.pop();
+                }else{
+                    Attributes.get(All_Column_nams[i]) //we get the column name from the array
+                            .add("NULL"); // we assign null
+                }
+
             }
-            values.pop();
-            Column_names.pop();
+
+        }else{
+            while (!Column_names.isEmpty()){
+                if(Attributes.containsKey(Column_names.getFirst())){
+                    Attributes.get(Column_names.getFirst()) //we get the column name Values
+                            .add(values.getFirst()); // we assign a single value
+                    System.out.println("Value (" + values.getFirst() + ") inserted in column: "+ Column_names.getFirst());
+                }else {
+                    throw new ParserException("This Column: " + Column_names.getFirst()+ " does not exist!");
+                }
+                values.pop();
+                Column_names.pop();
+            }
         }
+
+
 
         System.out.println("Table populated successfully!");
     }
@@ -138,6 +163,10 @@ public class Table {
         }
 
 
+    }
+
+    public int numberOfattributes(){
+        return this.Attributes.size();
     }
 
 }
