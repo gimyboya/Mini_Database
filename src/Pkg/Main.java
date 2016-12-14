@@ -240,6 +240,11 @@ public class Main {
 
                 statement = input.nextLine();
 
+                if(statement.matches("schema")){
+                    schema.PrintTablSheme();
+                    input.next();
+                }
+
 
                 try { // this is to ctach the costomized exceptions that w made in our parser and tokenizer and even methods
 
@@ -431,6 +436,11 @@ public class Main {
                 System.out.println("Notice: Write your query in a single line and do not forget the famous ';' ");
 
                 statement = input.nextLine();
+
+                if(statement.matches("schema")){
+                    schema.PrintTablSheme();
+                    input.next();
+                }
 
                 try { // this is to ctach the costomized exceptions that w made in our parser and tokenizer and even methods
 

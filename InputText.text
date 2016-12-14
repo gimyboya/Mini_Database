@@ -95,3 +95,12 @@ INSERT INTO Persons
 VALUES
 	('4', 'fancy product', 'yes')
 ;
+
+CREATE TABLE Cats
+	(
+		PersonID int,
+		LastName varchar(255),
+		FirstName varchar(255),
+		Address varchar(255),
+		Country varchar(255)
+);

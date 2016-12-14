@@ -39,9 +39,10 @@ public class Schema {
     }
 
     public void PrintTablSheme(){
-        System.out.println("This schema contains: " + TableSheme.size() + " Table(s)");
+        System.out.println("This Schema contains a Total of: " + TableSheme.size() + " Table(s)");
         for(String tb_name: TableSheme.keySet()){
-            System.out.println(tb_name);
+            System.out.println("Table: " + tb_name);
+            System.out.println("With " + TableSheme.get(tb_name).number_of_Rows() + " Row(s)");
         }
     }
 

@@ -124,18 +124,17 @@ Order specification: `DESC, ASC`
 so far our program can execute the following commands:
 
 - [x] **CREAT TABLE**
-
 - [x] **DROP TABLE**
-
-- [x] **INSERT INTO**
-
+- [x] **INSERT INTO** 
+      - [x] inserting a single complete row. (all columns)
+      - [x] inserting a single partial row. (selected columns)
 - [x] **UPDATE** 
-
+      - [x] updating all the values in the column
+      - [ ] update specific cells in the column (requires WHERE query).
 - [x] **SELECT **
+      - [x] *
+      - [x] specific columns order not important
 
-
-
-## TODO:
 
 - [ ] **WHERE**
 - [ ] **DISTINCT**
@@ -143,6 +142,8 @@ so far our program can execute the following commands:
 - [ ] **ORDER BY**
 - [ ] **AND & OR**
 - [ ] allowing the user to type the statements on multiple lines
+- [ ] making a data type checking
+- [ ] Implementing primary key features
 
 ###  Added features:
 

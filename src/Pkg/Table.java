@@ -169,4 +169,13 @@ public class Table {
         return this.Attributes.size();
     }
 
+    public int number_of_Rows(){
+
+        Object[] values = this.Attributes.keySet().toArray();
+        return this.Attributes.get(values[0]).size();
+    }
+
+    public LinkedHashMap<String, LinkedList> getAttributes() {
+        return Attributes;
+    }
 }
