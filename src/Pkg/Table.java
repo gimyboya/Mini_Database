@@ -132,7 +132,7 @@ public class Table {
         System.out.println("|\n");
         for (int i = 0; i < numberofrows; i++) {
             for (int i1 = 0; i1 < Column_names.length; i1++) {
-                System.out.print(" " + table.Attributes.get(Column_names[i1]).get(i));
+                System.out.print(" " + table.Attributes.get(Column_names[i1]).get(i) + "\t");
             }
 
             System.out.println("\n");
@@ -156,7 +156,7 @@ public class Table {
 
         for (int i = 0; i < numberofrows; i++) {
             for (int i1 = 0; i1 < Column_names.size(); i1++) {
-                System.out.print(" " + table.Attributes.get(Column_names.get(i1)).get(i));
+                System.out.print(" " + table.Attributes.get(Column_names.get(i1)).get(i) + "\t");
             }
 
             System.out.println("\n");

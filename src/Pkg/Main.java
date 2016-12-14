@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class Main {
 
-    @SuppressWarnings("Duplicates")//this is to show to everyone that we have duplicated code and we suppressed the warning about it
+    @SuppressWarnings("Duplicates") //this is to show to everyone that we have duplicated code and we suppressed the warning about it
 
     public static void main(String[] args) {
 
@@ -242,7 +242,7 @@ public class Main {
 
                 if(statement.matches("schema")){
                     schema.PrintTablSheme();
-                    input.next();
+                    statement = input.nextLine();
                 }
 
 
@@ -378,7 +378,7 @@ public class Main {
 
                     } else if (parser.ParsedNodes.getFirst().getContext() == Tokenizer.Token.SELECT) { //SELECT
                         parser.ParsedNodes.pop();
-                        System.out.println(parser.ParsedNodes.getFirst().getContext());
+
                         if (parser.ParsedNodes.getFirst().getContext() == Tokenizer.Token.MULTIPLY) { //SELECT *
                             parser.ParsedNodes.pop();
                             String tb_name = parser.ParsedNodes.getFirst().getTb_name();
@@ -432,14 +432,14 @@ public class Main {
             String exit;
 
             do {                                                                                   // DIRECT user INPUT
-                System.out.println("\n\n\n");
+                System.out.println("\n\n");
                 System.out.println("Notice: Write your query in a single line and do not forget the famous ';' ");
 
                 statement = input.nextLine();
 
                 if(statement.matches("schema")){
                     schema.PrintTablSheme();
-                    input.next();
+                    statement = input.nextLine();
                 }
 
                 try { // this is to ctach the costomized exceptions that w made in our parser and tokenizer and even methods
@@ -621,8 +621,7 @@ public class Main {
 
 
         } else {
-            System.out.println("Ummmm wired answer ....Please enter (y|Y) or (n|N): ");
-            answer = input.nextLine();
+            System.out.println("Ummmm wired answer ....I could have checked the user input again but that will triple the code");
         }
 
 

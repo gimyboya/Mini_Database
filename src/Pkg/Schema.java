@@ -32,7 +32,7 @@ public class Schema {
         System.out.print(" in table" + tb_name );
     }
 
-    public void updat_table_where(){}
+    public void updat_table_where(){} // # TODO
 
     public Table getTable(String tb_name){
         return TableSheme.get(tb_name);
