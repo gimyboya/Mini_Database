@@ -2,9 +2,7 @@ package Pkg;
 
 import jdk.nashorn.internal.runtime.ParserException;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -77,33 +75,68 @@ public class Table {
                     temp.add(values.getFirst());
                 }
 
-                Attributes.get(Column_names.getFirst()) //we get the column_name Values (linkedlist)
-                        .add(temp);// we assign the temp linked list as values
+                Attributes.get(Column_names.getFirst()).clear();// we clear all the values
+
+                for (int i = 0; i < size; i++) {
+                    Attributes.get(Column_names.getFirst()).add(i, values.getFirst()); //we get the column_name Values (linkedlist) and we assign the temp linked list as values
+                }
+
+
 
             }else {
                 throw new ParserException("This Column: " + Column_names.getFirst()+ " does not exist!");
             }
-            System.out.print("all the values in The Column " + Column_names.getFirst()+ " has been updated to the vale: " + values.getFirst() );
+            System.out.print("updated The Column " + Column_names.getFirst()+ " to the vale: " + values.getFirst() );
             values.pop();
             Column_names.pop();
         }
     }
 
     public void select_All(Table table){
-        
-        Set<String> Column_names = table.Attributes.keySet();
-        System.out.println("The set: " + Column_names);
-        for (String column_name : Column_names) {
-            System.out.print("||" + column_name + "\t||");
-            System.out.println("\n");
-            LinkedList c_values;
-            c_values = (LinkedList) table.Attributes.get(column_name).clone();
 
-            for (Object c_value : c_values) {
-                System.out.println(c_value);
-            }
+        String[] Column_names = table.Attributes.keySet().toArray(new String[table.Attributes.keySet().size()]);
+
+        int numberofrows = table.Attributes.get(Column_names[0]).size();
+
+
+        for (String column_name : Column_names) {
+            System.out.print("|\t" + column_name + "\t|");
+
         }
-        
+
+        System.out.println("|\n");
+        for (int i = 0; i < numberofrows; i++) {
+            for (int i1 = 0; i1 < Column_names.length; i1++) {
+                System.out.print(" " + table.Attributes.get(Column_names[i1]).get(i));
+            }
+
+            System.out.println("\n");
+        }
+
+
+    }
+
+    public void select_Column(Table table, LinkedList<String> Column_names){
+
+
+        int numberofrows = table.Attributes.get(Column_names.getFirst()).size();
+
+
+        for (String column_name : Column_names) {
+            System.out.print("|\t" + column_name + "\t|");
+
+        }
+
+        System.out.println("|\n");
+
+        for (int i = 0; i < numberofrows; i++) {
+            for (int i1 = 0; i1 < Column_names.size(); i1++) {
+                System.out.print(" " + table.Attributes.get(Column_names.get(i1)).get(i));
+            }
+
+            System.out.println("\n");
+        }
+
 
     }
 

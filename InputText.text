@@ -28,8 +28,8 @@ SELECT
 FROM
   ForgeRock;
 SELECT
-  productName,
-  description
+  description,
+  productName
 FROM
   ForgeRock;
 CREATE TABLE Persons

@@ -1,5 +1,7 @@
 package Pkg;
 
+import jdk.nashorn.internal.runtime.ParserException;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -35,6 +37,7 @@ public class Schema {
     public Table getTable(String tb_name){
         return TableSheme.get(tb_name);
     }
+
     public void PrintTablSheme(){
         System.out.println("This schema contains: " + TableSheme.size() + " Table(s)");
         for(String tb_name: TableSheme.keySet()){

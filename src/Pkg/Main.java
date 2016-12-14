@@ -11,6 +11,8 @@ import java.util.regex.Pattern;
 
 public class Main {
 
+    @SuppressWarnings("Duplicates")//this is to show to everyone that we have duplicated code and we suppressed the warning about it
+
     public static void main(String[] args) {
 
         FileHandler fileHandler = new FileHandler();
@@ -37,9 +39,9 @@ public class Main {
             queries = fileHandler.readSql();
             fileHandler.closeFile();
 
-            int size = queries.size();
+            int qrsize = queries.size();
 
-            for (int i = 0; i < size; i++) {
+            for (int i = 0; i < qrsize; i++) {
 
 
                 try { // this is to ctach the costomized exceptions that w made in our parser and tokenizer and even methods
@@ -158,9 +160,9 @@ public class Main {
                         LinkedList Column_names = new LinkedList();
                         LinkedList values = new LinkedList();
 
-                        int pnsize = parser.ParsedNodes.size();
+                        int size = parser.ParsedNodes.size();
 
-                        for (int i1 = 0; i1 < pnsize; i1++) {
+                        for (int i1 = 0; i1 < size; i1++) {
                             if (parser.ParsedNodes.getFirst().getType() == SqlStatementNode.column_name_Node) {
                                 Column_names.add(parser.ParsedNodes.getFirst().getColumn_name());
                                 parser.ParsedNodes.pop();
@@ -176,16 +178,40 @@ public class Main {
 
                         schema.updat_table(tb_name, Column_names, values); //# TODO implement where here
 
-                    } else if (parser.ParsedNodes.getFirst().getContext() == Tokenizer.Token.SELECT) {
+                    } else if (parser.ParsedNodes.getFirst().getContext() == Tokenizer.Token.SELECT) { //SELECT
                         System.out.println("\n\n\n\n\n\n");
 
                         parser.ParsedNodes.pop();
                         System.out.println(parser.ParsedNodes.getFirst().getContext());
-                        if (parser.ParsedNodes.getFirst().getContext() == Tokenizer.Token.MULTIPLY) {
+                        if (parser.ParsedNodes.getFirst().getContext() == Tokenizer.Token.MULTIPLY) { //SELECT *
                             parser.ParsedNodes.pop();
                             String tb_name = parser.ParsedNodes.getFirst().getTb_name();
+                            if(!schema.hasTable(tb_name)){
+                                throw new ParserException("Table " + tb_name + " Don't exist!");
+                            }
                             schema.getTable(tb_name).select_All(schema.getTable(tb_name));
-                        } else {
+                        } else {                                                                    // SELECT Column_name
+
+                            LinkedList<String> Column_names = new LinkedList<>();
+                            int size = parser.ParsedNodes.size();
+
+                            for (int i1 = 0; i1 < size; i1++) {
+
+                                if(parser.ParsedNodes.getFirst().getType() == SqlStatementNode.column_name_Node){
+                                    Column_names.add(parser.ParsedNodes.getFirst().getColumn_name());
+                                    parser.ParsedNodes.pop();
+                                }
+
+                            }
+
+                            if(parser.ParsedNodes.getFirst().getType() == SqlStatementNode.tb_name_Node){
+                                String tb_name = parser.ParsedNodes.getFirst().getTb_name();
+                                parser.ParsedNodes.pop();
+                                if(!schema.hasTable(tb_name)){
+                                    throw new ParserException("Table " + tb_name + " Don't exist!");
+                                }
+                                schema.getTable(tb_name).select_Column(schema.getTable(tb_name), Column_names);
+                            }
 
 
                         }
@@ -344,6 +370,9 @@ public class Main {
                         if (parser.ParsedNodes.getFirst().getContext() == Tokenizer.Token.MULTIPLY) {
                             parser.ParsedNodes.pop();
                             String tb_name = parser.ParsedNodes.getFirst().getTb_name();
+                            if(!schema.hasTable(tb_name)){
+                                throw new ParserException("Table " + tb_name + " Don't exist!");
+                            }
                             schema.getTable(tb_name).select_All(schema.getTable(tb_name));
                         } else {
 
@@ -506,6 +535,9 @@ public class Main {
                         if (parser.ParsedNodes.getFirst().getContext() == Tokenizer.Token.MULTIPLY) {
                             parser.ParsedNodes.pop();
                             String tb_name = parser.ParsedNodes.getFirst().getTb_name();
+                            if(!schema.hasTable(tb_name)){
+                                throw new ParserException("Table " + tb_name + " Don't exist!");
+                            }
                             schema.getTable(tb_name).select_All(schema.getTable(tb_name));
                         } else {
 
