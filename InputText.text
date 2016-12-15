@@ -8,22 +8,14 @@ CREATE TABLE ForgeRock
 INSERT INTO ForgeRock
 	(id, productName, description)
 VALUES
-	('1', 'OpenIDM', 'Platform for building enterprise provisioning solutions')
+	(1, 'OpenIDM', 'Platform for building enterprise provisioning solutions')
 ;
 
 
 INSERT INTO ForgeRock
 	(id, productName, description)
 VALUES
-	('2', 'closeIDM', 'something')
-;
-
-
-
-INSERT INTO ForgeRock
-	(id, productName, description)
-VALUES
-	('3', 'saitama', 'hero for fun')
+	(2, 'closeIDM', 'something')
 ;
 
 
@@ -31,7 +23,15 @@ VALUES
 INSERT INTO ForgeRock
 	(id, productName, description)
 VALUES
-	('4', 'fancy product', 'yes')
+	(3, 'saitama', 'hero for fun')
+;
+
+
+
+INSERT INTO ForgeRock
+	(id, productName, description)
+VALUES
+	(4, 'fancy product', 'yes')
 ;
 
 
@@ -69,7 +69,7 @@ CREATE TABLE Persons
 INSERT INTO Persons
 	(PersonID, LastName, city)
 VALUES
-	('1', 'Zarir', 'Bangladesh')
+	(1, 'Zarir', 'Bangladesh')
 ;
 
 
@@ -77,7 +77,7 @@ VALUES
 INSERT INTO Persons
 	(PersonID, LastName, city)
 VALUES
-	('2', 'Amjad', 'Palestine')
+	(2, 'Amjad', 'Palestine')
 ;
 
 
@@ -85,7 +85,7 @@ VALUES
 INSERT INTO Persons
 	(PersonID, LastName, description)
 VALUES
-	('3', 'saitama', 'hero for fun')
+	(3, 'saitama', 'hero for fun')
 ;
 
 
@@ -93,7 +93,7 @@ VALUES
 INSERT INTO Persons
 	(PersonID, LastName, description)
 VALUES
-	('4', 'fancy product', 'yes')
+	(4, 'fancy product', 'yes')
 ;
 
 CREATE TABLE Cats

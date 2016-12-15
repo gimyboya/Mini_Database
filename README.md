@@ -24,7 +24,7 @@
 
 ## Introduction:
 
-To implement anything related to a database we need first to get an input as an SQL statement then we should be able to validate that input and give it a logical meaning so that it can processed 
+To implement anything related to a database we need first to get an input as an SQL statement then we should be able to validate that input and give it a logical meaning so that it can be processed. 
 
 ## Implementation:
 
@@ -114,14 +114,14 @@ SELECT * FROM Weather ORDER BY City, Date
 
 ###  Added features:
 
-Null order specification: `NULL FIRST NULL LAST`
+Order specification: `DESC, ASC` 
 
-Order specification: `DESC, ASC`  
+Comparators ( = | (><| != | ~= | ^=) | < | <=| > | >= )
 
 ----
 ## Statements Execution:
 
-so far our program can execute the following commands:
+So far our program can execute the following commands:
 
 - [x] **CREAT TABLE**
 - [x] **DROP TABLE**
@@ -141,8 +141,10 @@ so far our program can execute the following commands:
 - [ ] **DELETE**
 - [ ] **ORDER BY**
 - [ ] **AND & OR**
+- [ ] comparators ( = | (><| != | ~= | ^=) | < | <=| > | >= )
+- [x] checking the schema.
 - [ ] allowing the user to type the statements on multiple lines
-- [ ] making a data type checking
+- [ ] making a data type checking including length checking
 - [ ] Implementing primary key features
 
 ###  Added features:
