@@ -59,7 +59,7 @@ CREATE TABLE Persons
 	(
 		PersonID int,
 		LastName varchar(255),
-		FirstName varchar(255),
+		city varchar(255),
 		Address varchar(255),
 		Country varchar(255)
 );
@@ -67,7 +67,7 @@ CREATE TABLE Persons
 
 
 INSERT INTO Persons
-	(PersonID, LastName, city)
+	(PersonID, LastName, Country)
 VALUES
 	(1, 'Zarir', 'Bangladesh')
 ;
@@ -75,7 +75,7 @@ VALUES
 
 
 INSERT INTO Persons
-	(PersonID, LastName, city)
+	(PersonID, LastName, Country)
 VALUES
 	(2, 'Amjad', 'Palestine')
 ;
@@ -83,7 +83,7 @@ VALUES
 
 
 INSERT INTO Persons
-	(PersonID, LastName, description)
+	(PersonID, LastName, Country)
 VALUES
 	(3, 'saitama', 'hero for fun')
 ;
@@ -91,16 +91,30 @@ VALUES
 
 
 INSERT INTO Persons
-	(PersonID, LastName, description)
+	(PersonID, LastName, Country)
 VALUES
-	(4, 'fancy product', 'yes')
+	(4, 'someone', 'yes')
 ;
 
 CREATE TABLE Cats
 	(
-		PersonID int,
-		LastName varchar(255),
-		FirstName varchar(255),
-		Address varchar(255),
-		Country varchar(255)
+		CatID int,
+		Name varchar(255),
+		Race varchar(255),
 );
+
+CREATE TABLE STATION 
+(
+ID INTEGER, 
+CITY CHAR(20), 
+STATE CHAR(2), 
+LAT_N REAL,
+LONG_W REAL
+);
+
+INSERT INTO STATION VALUES (13, 'Phoenix', 'AZ', 33, 112);
+ 
+INSERT INTO STATION VALUES (44, 'Denver', 'CO', 40, 105);
+ 
+INSERT INTO STATION VALUES (66, 'Caribou', 'ME', 47, 68)
+

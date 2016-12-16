@@ -30,8 +30,8 @@ UNKNOWN 29
 VALUES 30
 BOOLEAN 31
 BOOL 32
-INT 33
 INTEGER 34
+INT 33
 REAL 35
 FLOAT 36
 DOUBLE 37
@@ -46,10 +46,10 @@ TEXT 42
 ; 46
 , 47
 !=|<>|~=|^= 48
-< 49
 <= 50
-> 51
 >= 52
+< 49
+> 51
 \( 53
 \) 54
 \+ 55
