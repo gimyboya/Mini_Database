@@ -1,25 +1,3 @@
-# Final Projects
-
-----
-
-**Team Name:** NoName
-
-**Project Name:** Mini SQL Database
-
-**Section:** 4
-
-**Members:**
-
-  1. Bekka Amine Fatah 1429659
-
-  2. Abdulraouf Naseh 1216509
-
-  3. Rouhullah Zakiri 1213539 
-
-  4. Munawar Shah 1222315
-
-----
-
 # Mini SQL Database:
 
 ## Introduction:
